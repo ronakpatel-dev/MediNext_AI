@@ -1,93 +1,163 @@
-# MediNext_AI
+# MediNext AI
 
+A modern AI-powered Healthcare Management System built with Streamlit, featuring a comprehensive dashboard for healthcare professionals with Superwise AI integration.
 
+## 🚀 Quick Start
 
-## Getting started
+### Option 1: Docker (Recommended)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+1. **Prerequisites**: Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+2. **Quick Launch**:
+   ```bash
+   # Build and run
+   docker-compose up --build
+   
+   # Run in background
+   docker-compose up -d
+   
+   # Stop
+   docker-compose down
+   ```
 
-## Add your files
+3. Open your browser and navigate to `http://localhost:9000`
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+### Option 2: Local Python Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd medinext_ai
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Set up environment variables** (optional):
+   ```bash
+   cp env.example .env
+   # Edit .env file with your Superwise API credentials
+   ```
+
+4. **Run the application**:
+   ```bash
+   streamlit run app/main.py
+   ```
+
+5. Open your browser and navigate to `http://localhost:9000`
+
+## ✨ Features
+
+- **📊 Dashboard Overview**: Real-time metrics and summary cards with patient analytics
+- **👥 Patient Management**: Search and view patient information with AI-powered insights
+- **📅 Appointment Scheduling**: Calendar and appointment management
+- **💊 Prescription Management**: Medication and prescription tracking
+- **📈 Reports & Analytics**: Interactive data visualization and reporting tools
+- **🔔 Recent Activities**: Real-time activity monitoring with critical alerts
+- **🤖 AI Integration**: Superwise AI-powered patient analysis and insights
+
+## 🏗️ Project Structure
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/askboss/product/superwise/core-use-cases/medinext_ai.git
-git branch -M main
-git push -uf origin main
+medinext_ai/
+├── app/
+│   ├── components/              # Reusable UI components
+│   │   ├── header.py            # Application header
+│   │   ├── sidebar.py           # Navigation sidebar
+│   │   ├── dashboard_cards.py   # Metric summary cards
+│   │   ├── patient_table.py     # Patient data table
+│   │   ├── patient_details.py   # Patient details with AI analysis
+│   │   ├── activity_feed.py     # Recent activities display
+│   │   ├── analytics_charts.py # Data visualization charts
+│   │   └── landing_page.py     # Landing page component
+│   ├── config/                  # Configuration settings
+│   │   ├── settings.py          # Application settings
+│   │   └── api_config.py        # Superwise API configuration
+│   ├── utils/                   # Utility functions
+│   │   ├── css_styles.py        # Custom CSS styles
+│   │   └── logger.py           # Logging utilities
+│   ├── assets/                  # Static assets
+│   │   └── synthetic_ehr_data.csv # Sample patient data
+│   └── main.py                  # Main application entry point
+├── tests/                       # Test files
+├── logs/                        # Application logs
+├── requirements.txt             # Python dependencies
+├── docker-compose.yml          # Docker configuration
+├── Dockerfile                  # Docker image definition
+├── env.example                 # Environment variables template
+└── README.md                   # This file
 ```
 
-## Integrate with your tools
+## 🛠️ Technology Stack
 
-- [ ] [Set up project integrations](https://gitlab.com/askboss/product/superwise/core-use-cases/medinext_ai/-/settings/integrations)
+- **Frontend**: Streamlit
+- **Data Processing**: Pandas, NumPy
+- **Visualization**: Plotly
+- **AI Integration**: Superwise API
+- **Styling**: Custom CSS with Streamlit components
+- **Containerization**: Docker & Docker Compose
+- **Environment**: Python 3.8+
 
-## Collaborate with your team
+## 📚 Documentation
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+For detailed information about specific aspects of the project, please refer to:
 
-## Test and Deploy
+- **[Docker Setup Guide](DOCKER_README.md)** - Comprehensive Docker deployment instructions
+- **[Project Overview](PROJECT_OVERVIEW.md)** - Detailed architecture and feature descriptions
+- **[Superwise API Guide](SUPERWISE_API_GUIDE.md)** - AI integration setup and usage
 
-Use the built-in continuous integration in GitLab.
+## 🔧 Configuration
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### Environment Variables
 
-***
+Copy `env.example` to `.env` and configure:
 
-# Editing this README
+```bash
+# Superwise API Configuration
+SUPERWISE_API_URL=https://api.superwise.ai/
+SUPERWISE_API_VERSION=v1
+SUPERWISE_APP_ID=YOUR_SUPERWISE_APP_ID
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+# API Timeout Settings
+API_TIMEOUT=30
+MAX_RETRIES=3
+RETRY_DELAY=1
+```
 
-## Suggestions for a good README
+**Note**: The Superwise API configuration is required for AI features to work properly.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## 🧪 Testing
 
-## Name
-Choose a self-explaining name for your project.
+Run the test suite:
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+```bash
+# Run all tests
+pytest
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+# Run with coverage
+pytest --cov=app
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+# Run specific test file
+pytest tests/test_main.py
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## 🤝 Contributing
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new functionality
+5. Submit a pull request
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+## 📄 License
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## 🆘 Support
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+For support and questions:
+- Check the [documentation files](#documentation) above
+- Review the [Docker Setup Guide](DOCKER_README.md) for deployment issues
+- Consult the [Superwise API Guide](SUPERWISE_API_GUIDE.md) for AI integration help
