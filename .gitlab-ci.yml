@@ -1,0 +1,79 @@
+# GitLab CI/CD Pipeline for MediNext AI
+# Uses Google Cloud Build for container builds and Cloud Run for deployment
+
+stages:
+  - build
+  - test
+
+variables:
+  # GCP Configuration
+  GCP_PROJECT_ID: $GCP_PROJECT_ID
+  GCP_REGION: $GCP_REGION
+  ARTIFACT_REGISTRY_REPOSITORY: $ARTIFACT_REGISTRY_REPOSITORY
+  SERVICE_NAME: medinext-ai
+  
+  # Cloud Build Configuration
+  CLOUD_BUILD_TRIGGER_NAME: medinext-ai-trigger
+  
+  # Cloud Run Configuration
+  CLOUD_RUN_SERVICE_NAME: medinext-ai
+  CLOUD_RUN_PORT: 9000
+
+# Build and deploy using Cloud Build
+build_and_deploy:
+  stage: build
+  image: google/cloud-sdk:alpine
+  before_script:
+    - echo "Setting up authentication..."
+    - echo $GCP_SERVICE_ACCOUNT_KEY | base64 -d > /tmp/gcp-key.json
+    - gcloud auth activate-service-account --key-file /tmp/gcp-key.json
+    - gcloud config set project $GCP_PROJECT_ID
+  script:
+    - echo "Submitting build to Cloud Build..."
+    - |
+      gcloud builds submit \
+        --config cloudbuild.yaml \
+        --substitutions=_SERVICE_NAME=$SERVICE_NAME,_REGION=$GCP_REGION,_REPOSITORY=$ARTIFACT_REGISTRY_REPOSITORY,_COMMIT_SHA=$CI_COMMIT_SHORT_SHA \
+        .
+    - echo "Build and deployment completed!"
+  only:
+    - main
+    - develop
+
+# Test stage
+test:
+  stage: test
+  image: python:3.11-slim
+  before_script:
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+  script:
+    - echo "Running Python tests..."
+    - python -m pytest tests/ -v --tb=short
+    - echo "Running linting..."
+    - pip install flake8 black
+    - flake8 app/ --max-line-length=100 --ignore=E203,W503
+    - black --check app/
+    - echo "All tests passed!"
+  only:
+    - main
+    - develop
+    - merge_requests
+
+# Security scan
+security_scan:
+  stage: test
+  image: python:3.11-slim
+  before_script:
+    - pip install --upgrade pip
+    - pip install safety bandit
+  script:
+    - echo "Running security scans..."
+    - safety check --json
+    - bandit -r app/ -f json
+    - echo "Security scan completed!"
+  allow_failure: true
+  only:
+    - main
+    - develop
+    - merge_requests
