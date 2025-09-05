@@ -36,6 +36,8 @@ build_and_deploy:
         --substitutions=_SERVICE_NAME=$SERVICE_NAME,_REGION=$GCP_REGION,_REPOSITORY=$ARTIFACT_REGISTRY_REPOSITORY,_COMMIT_SHA=$CI_COMMIT_SHORT_SHA \
         .
     - echo "Build and deployment completed!"
+  tags: 
+  - f0nl9KXRnY9vZaSJuQd2iigwi4nhFk
   only:
     - main
     - develop
@@ -55,6 +57,8 @@ test:
     - flake8 app/ --max-line-length=100 --ignore=E203,W503
     - black --check app/
     - echo "All tests passed!"
+  tags:
+  - f0nl9KXRnY9vZaSJuQd2iigwi4nhFk
   only:
     - main
     - develop
@@ -73,6 +77,8 @@ security_scan:
     - bandit -r app/ -f json
     - echo "Security scan completed!"
   allow_failure: true
+  tags:
+  - f0nl9KXRnY9vZaSJuQd2iigwi4nhFk
   only:
     - main
     - develop
