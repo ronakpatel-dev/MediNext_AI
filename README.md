@@ -58,6 +58,32 @@ A modern AI-powered Healthcare Management System built with Streamlit, featuring
 - **🔔 Recent Activities**: Real-time activity monitoring with critical alerts
 - **🤖 AI Integration**: Superwise AI-powered patient analysis and insights
 
+## 🛡️ Guardrails & Telemetry
+
+### **Guardrails System**
+- **Real-time Violation Detection**: Automated monitoring of glucose (>200 mg/dL) and hemoglobin (<12 g/dL) thresholds
+- **Compliance Tracking**: Visual guardrail status indicators and violation counts
+- **Risk Assessment**: Patient risk scoring with critical alert prioritization
+- **Activity Monitoring**: Guardrail violations appear in real-time activity feed
+
+**Where to Find Guardrails:**
+- **Dashboard**: View guardrail violations in summary cards (`/dashboard`)
+- **Patient Details**: Check individual patient guardrail status (`/patient-details`)
+- **Activity Feed**: Monitor real-time guardrail alerts (`/dashboard`)
+- **Analytics**: Analyze guardrail compliance trends (`/analytics`)
+
+### **Telemetry & Monitoring**
+- **Performance Metrics**: Application response times and system health monitoring
+- **User Analytics**: Session tracking and user behavior monitoring
+- **Logging System**: Comprehensive logging with file and console output
+- **Health Checks**: Docker health monitoring with Streamlit health endpoints
+
+**Where to Find Telemetry:**
+- **Logs**: Check `logs/` directory for detailed application logs
+- **Docker Health**: Monitor container health via `docker-compose ps`
+- **Dashboard Metrics**: View performance metrics in dashboard cards
+- **Activity Feed**: Monitor system events and user activities
+
 ## 🏗️ Project Structure
 
 ```
@@ -127,6 +153,54 @@ RETRY_DELAY=1
 ```
 
 **Note**: The Superwise API configuration is required for AI features to work properly.
+
+## 🔒 Data Privacy & Compliance
+
+### **Important Disclaimers**
+
+⚠️ **This application uses SYNTHETIC DUMMY DATA for demonstration purposes only.**
+
+- **No Real Patient Data**: All patient information in this application is artificially generated
+- **Educational Purpose**: This is a demonstration/educational project, not a production healthcare system
+- **Data Sources**: Patient data comes from `synthetic_ehr_data.csv` and `synthetic_ehr_data.json`
+
+🚨 **CRITICAL SECURITY LIMITATIONS - NOT PRODUCTION READY:**
+
+- **No Authentication**: Application has no user login or authentication system
+- **No Authorization**: No access controls or user permission management
+- **No Data Encryption**: Patient data is stored and transmitted without encryption
+- **No Session Management**: No secure session handling or user state management
+- **No Access Logging**: No audit trails for data access or user activities
+- **No Input Validation**: Limited input sanitization and validation
+- **No HTTPS Enforcement**: No SSL/TLS encryption for data transmission
+
+**⚠️ DO NOT USE WITH REAL PATIENT DATA - FOR DEMONSTRATION ONLY**
+
+### **HIPAA & PHI Considerations**
+
+**For Production Use:**
+- **HIPAA Compliance**: Ensure proper HIPAA compliance before handling real patient data
+- **PHI Protection**: Implement proper safeguards for Protected Health Information (PHI)
+- **Data Encryption**: Use encryption for data at rest and in transit
+- **Access Controls**: Implement proper user authentication and authorization
+- **Audit Logging**: Maintain comprehensive audit trails for all data access
+- **Business Associate Agreements**: Ensure all third-party services (like Superwise API) have proper BAAs
+
+**Current Implementation:**
+- ✅ **Synthetic Data Only**: No real patient data is processed
+- ✅ **Local Processing**: Data stays within your local environment
+- ✅ **No External Storage**: No data is sent to external databases
+- ⚠️ **API Integration**: Superwise API calls may transmit synthetic data (configure accordingly)
+
+### **Security Best Practices**
+
+1. **Environment Variables**: Never commit real API keys or sensitive data
+2. **Data Validation**: Implement proper input validation and sanitization
+3. **Error Handling**: Avoid exposing sensitive information in error messages
+4. **Logging**: Be cautious about logging sensitive data
+5. **Network Security**: Use HTTPS in production environments
+
+**Note**: This application is for educational/demonstration purposes. For production healthcare applications, consult with legal and compliance experts regarding HIPAA requirements.
 
 ## 🧪 Testing
 
